@@ -103,8 +103,10 @@ The total number of rows with `NA` is equal to 2304.  The new mean with imputed 
 weekday <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 #add new column that differentiates between weekday and weekend
 imputed_data$day <- ifelse(weekdays(as.Date(imputed_data$date)) %in% weekday, "Weekday", "Weekend")
+#average number of steps per day
+steps_mean_imputed <- aggregate(steps ~ interval + day, imputed_data, mean)
 #create faceted time series plot
-p2 <- ggplot(imputed_data, aes(interval, steps))
+p2 <- ggplot(steps_mean_imputed, aes(interval, steps))
 p2 + geom_line() + labs(title = "Steps by Interval of Weekday vs Weekend") + xlab("Interval (Minutes)") +  ylab("Steps") + facet_grid(day~.)
 ```
 
